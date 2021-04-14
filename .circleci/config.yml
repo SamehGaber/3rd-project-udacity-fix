@@ -51,15 +51,10 @@ jobs:
       - run:
           name: Build front-end 
           command: |
-            npm install --prefix /home/circleci/project/frontend
-          # npm run test --prefix /home/circleci/project/frontend
-          # npm run test:watch --prefix /home/circleci/project/frontend
-          # npm run pretest:cov --prefix /home/circleci/project/frontend
-          # npm run test:cov --prefix /home/circleci/project/frontend
-            npm run start --prefix /home/circleci/project/frontend
-            npm run build:prod --prefix /home/circleci/project/frontend
-            npm run build --prefix /home/circleci/project/frontend
-          #  exit 1
+            cd frontend
+            npm install
+            npm run build
+
       - save_cache:
           paths: [frontend/node_modules]
           key: frontend-build
@@ -85,8 +80,8 @@ jobs:
       - image: circleci/node:13.8.0
     steps:
       - checkout
-      # Checkout code from git
-      # Restore from cache
+      - restore_cache:
+          key: frontend-build
       # Your job code here
                 
   test-backend:
