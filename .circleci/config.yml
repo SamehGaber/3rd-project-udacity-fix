@@ -94,9 +94,13 @@ jobs:
       - image: circleci/node:13.8.0
     steps:
       - checkout
-      # cd frontendt
-      # Restore from cache
-      # Your job code here
+      - restore_cache:
+          key: backend-build
+      - run:
+          name: test back-end 
+          command: |
+            cd backend
+            npm run test
             
   scan-frontend:
     docker:
@@ -294,8 +298,8 @@ workflows:
       - build-backend
 #     - test-frontend:
 #         requires: [build-frontend]
-#      - test-backend:
-#          requires: [build-backend]
+      - test-backend:
+          requires: [build-backend]
 #      - scan-backend:
 #          requires: [build-backend]
 #     - scan-frontend:
