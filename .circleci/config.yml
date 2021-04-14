@@ -47,7 +47,7 @@ jobs:
       - checkout
       - restore_cache:
           keys: [frontend-build]
-      - run: pwd
+      - run: cd /home/circleci/project/frontend
       - run:
           name: Build front-end
           command: |
