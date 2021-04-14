@@ -57,7 +57,7 @@ jobs:
 
       - save_cache:
           paths: [frontend/node_modules]
-          key: frontend-build
+          key: frontend-build-updated
 
   build-backend:
     docker:
@@ -81,7 +81,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: frontend-build
+          key: frontend-build-updated
       - run:
           name: test front-end 
           command: |
