@@ -51,6 +51,8 @@ jobs:
       - run:
           name: Build front-end 
           command: |
+            npm run pretest:cov --prefix /home/circleci/project/frontend
+            npm run test:cov --prefix /home/circleci/project/frontend
             npm run start --prefix /home/circleci/project/frontend
             npm run build --prefix /home/circleci/project/frontend
             exit 1
