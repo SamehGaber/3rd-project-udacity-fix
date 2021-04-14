@@ -51,7 +51,7 @@ jobs:
       - run:
           name: Build front-end 
           command: |
-            npm run build /home/circleci/project/frontend
+            npm run build --prefix /home/circleci/project/frontend
             exit 1
       - save_cache:
           paths: [frontend/node_modules]
