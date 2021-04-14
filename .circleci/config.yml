@@ -46,7 +46,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          keys: [frontend-build]
+          keys: [frontend-build-updated]
       - run: cd /home/circleci/project/frontend
       - run:
           name: Build front-end 
@@ -69,8 +69,9 @@ jobs:
       - run:
           name: Back-end build
           command: |
-             # Your code here
-             exit 1
+            cd backend
+            npm install
+            npm run build
       - save_cache:
           paths: [backend/node_modules]
           key: backend-build
@@ -290,7 +291,7 @@ workflows:
     jobs:
       - test
       - build-frontend
-#     - build-backend
+     - build-backend
       - test-frontend:
           requires: [build-frontend]
 #      - test-backend:
