@@ -53,7 +53,6 @@ jobs:
           command: |
             cd frontend
             npm install
-            npm install oauth-sign
             npm run build
 
       - save_cache:
@@ -87,7 +86,6 @@ jobs:
           name: test front-end 
           command: |
             cd frontend
-            npm install oauth-sign
             npm run test
                 
   test-backend:
