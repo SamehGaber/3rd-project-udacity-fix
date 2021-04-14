@@ -82,7 +82,11 @@ jobs:
       - checkout
       - restore_cache:
           key: frontend-build
-      # Your job code here
+      - run:
+          name: test front-end 
+          command: |
+            cd frontend
+            npm run test
                 
   test-backend:
     docker:
@@ -282,8 +286,8 @@ workflows:
       - test
       - build-frontend
 #     - build-backend
-#      - test-frontend:
-#          requires: [build-frontend]
+      - test-frontend:
+          requires: [build-frontend]
 #      - test-backend:
 #          requires: [build-backend]
 #      - scan-backend:
