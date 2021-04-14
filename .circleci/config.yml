@@ -47,6 +47,7 @@ jobs:
       - checkout
       - restore_cache:
           keys: [frontend-build]
+      - run: cd /home/frontend
       - run:
           name: Build front-end
           command: |
