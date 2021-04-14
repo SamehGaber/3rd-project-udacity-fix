@@ -49,7 +49,7 @@ jobs:
           keys: [frontend-build]
       - run: cd /home/circleci/project/frontend
       - run:
-          name: Build front-end
+          name: Build front-end /home/circleci/project/frontend
           command: |
             npm run build 
             exit 1
