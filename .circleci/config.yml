@@ -33,6 +33,13 @@ commands:
             fi
             
 jobs:
+  test:
+    docker:
+      - image: circleci/node:13.8.0
+    steps:
+      - checkout
+      - run: echo "test"
+
   build-frontend:
     docker:
       - image: circleci/node:13.8.0
@@ -265,6 +272,8 @@ jobs:
 workflows:
   default:
     jobs:
+      - test
+'''
       - build-frontend
       - build-backend
       - test-frontend:
@@ -294,3 +303,4 @@ workflows:
           requires: [smoke-test]
       - cleanup:
           requires: [cloudfront-update]
+'''
