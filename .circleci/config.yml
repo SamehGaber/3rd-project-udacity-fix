@@ -45,7 +45,7 @@ jobs:
             echo "what !"
             aws --version
             aws s3 ls 
-            aws ec2 describe-instances --query 'Reservations[*].Instances[*].PrivateIpAddress' --output text 
+            aws ec2 describe-instances --query 'Reservations[*].Instances[*].PrivateIpAddress' --filters "Name=tag:Name,Values=backend-e8be4bc" --output text > ~/project/.circleci/ansible/inventory.txt
                        
       - persist_to_workspace:
           root: ~/
