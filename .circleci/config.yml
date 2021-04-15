@@ -151,13 +151,7 @@ jobs:
           name: Add back-end ip to ansible inventory
 
           command: |
-            apt-get update
-            wget https://dl.winehq.org/wine/source/1.9/wine-1.9.19.tar.gz
-            tar xzvf wine-1.9.19.tar.gz
-            cd wine-1.9.19
-            ./configure
-            make
-            make install
+            apt-get install -y tar
             aws ec2 describe-instances \
              --query 'Reservations[*].Instances[*].PublicIpAddress' \
              --filters "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:7}" \
