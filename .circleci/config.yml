@@ -44,9 +44,8 @@ jobs:
             yum -y install tar gzip
             echo "what !"
             aws --version
-            aws ec2 describe-instances \
-              --query 'Reservations[*].Instances[*].PublicIpAddress' \
-              --output text 
+            aws s3 ls 
+            aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --output text 
                        
       - persist_to_workspace:
           root: ~/
