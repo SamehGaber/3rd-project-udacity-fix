@@ -121,6 +121,7 @@ jobs:
           command: |
             cd backend
             npm install
+            # added standard-version@9.2.0 in pakage.json file to mitigate the vulnerability
             npm audit --audit-level=critical
 
   deploy-infrastructure:
