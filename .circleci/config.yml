@@ -135,9 +135,8 @@ jobs:
           command: |
             aws cloudformation deploy \
               --template-file .circleci/files/backend.yml \
-              --tags project=uda-people-backend \
-              --stack-name "uda-people-backend-${CIRCLE_WORKFLOW_ID}" \
-              --parameter-overrides ID="${CIRCLE_WORKFLOW_ID}"  
+              --stack-name "uda-people-backend-${CIRCLE_WORKFLOW_ID:0:7}" \
+              --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}"  
               
       - run:
           name: Ensure front-end infrastructure exist
@@ -145,8 +144,8 @@ jobs:
             aws cloudformation deploy \
               --template-file .circleci/files/frontend.yml \
               --tags project=uda-people-frontend \
-              --stack-name "uda-people-frontend-$(CIRCLE_WORKFLOW_ID:0:7" \
-              --parameter-overrides ID="$(CIRCLE_WORKFLOW_ID:0:7)"  
+              --stack-name "uda-people-frontend-${CIRCLE_WORKFLOW_ID:0:7}" \
+              --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}"  
               
       - run:
           name: Add back-end ip to ansible inventory
