@@ -43,6 +43,7 @@ jobs:
           command: |
             yum -y install tar gzip
             echo "what !"
+            aws --version
             aws ec2 describe-instances \
               --query 'Reservations[*].Instances[*].PublicIpAddress' \
               --output text 
