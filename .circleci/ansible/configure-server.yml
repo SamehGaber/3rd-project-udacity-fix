@@ -17,7 +17,7 @@
 
    # - name: "install python for Ansible."
       # Your code here
-    - shell: sudo apt-get install python 
+    - shell: sudo apt-get update && sudo apt-get install python3
 
   roles:
     - configure-server
