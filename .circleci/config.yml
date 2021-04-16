@@ -194,7 +194,7 @@ jobs:
       - checkout
       - add_ssh_keys:
            fingerprints:
-             - "c3:67:e6:e8:8b:f0:15:2a:c8:3c:48:8f:7c:2e:2b:d9:31:b8:1a:71"    # Add ssh keys with fingerprint
+             - "e9:b7:ef:6b:70:b2:56:dc:c8:41:d7:12:6c:b7:a9:7e"    # Add ssh keys with fingerprint
       - attach_workspace:       # attach workspace
          at: ~/
       - run: cat ~/project/.circleci/ansible/inventory.txt   
@@ -344,14 +344,14 @@ workflows:
 #          requires: [build-backend]
 #     - scan-frontend:
 #         requires: [build-frontend]
-      - deploy-infrastructure:
+#     - deploy-infrastructure:
 #         requires: [test-frontend, test-backend, scan-frontend, scan-backend]
-          requires: [pre-test]
-          filters:
-            branches:
-              only: [test-feature-branch]
+#         requires: [pre-test]
+#         filters:
+#           branches:
+#             only: [test-feature-branch]
       - configure-infrastructure:
-         requires: [deploy-infrastructure]    #require ,deploy-infrastructure
+         requires: [pre-test]    #require ,deploy-infrastructure
 #      - run-migrations:
 #          requires: [configure-infrastructure]
 #      - deploy-frontend:
