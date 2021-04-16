@@ -221,9 +221,13 @@ jobs:
       - image: circleci/node:13.8.0
     steps:
       - checkout
+      - restore_cache:
+          key: backend-build
       - run:
           name: Run migrations
           command: |
+            cd backend
+            npm install
             npm run migrations
 
       - run:
@@ -365,7 +369,7 @@ workflows:
       - configure-infrastructure:
          requires: [test]    #require ,deploy-infrastructure
       - run-migrations:
-         requires: [configure-infrastructure]
+         requires: [pre-test]  #,require configure-infrastructure
 #      - deploy-frontend:
 #          requires: [run-migrations]
 #      - deploy-backend:
