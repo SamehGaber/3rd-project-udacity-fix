@@ -212,12 +212,14 @@ jobs:
           name: Run migrations
           command: |
             # Your code here
-            exit 1
+            # exit 0
+            echo "test"
       - run:
           name: Send migration results to memstash
           command: |
             # Your code here
-            exit 1
+            # exit 0
+            echo "test"
      # Here's where you will add some code to rollback on failure      
 
   deploy-frontend:
