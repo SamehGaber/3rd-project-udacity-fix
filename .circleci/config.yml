@@ -195,12 +195,12 @@ jobs:
           name: Install dependencies
           command: |
             # Your code here
-            exit 1
+            exit 0
       - run:
           name: Configure server
           command: |
             # Your code here
-            exit 1
+            exit 0
       # Here's where you will add some code to rollback on failure      
 
   run-migrations:
