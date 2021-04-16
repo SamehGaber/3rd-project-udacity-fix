@@ -1,4 +1,4 @@
-## backend configuration playbook goes here.
+
 ---
 - name: "update apt packages."
   become: yes
