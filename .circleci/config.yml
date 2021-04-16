@@ -220,15 +220,19 @@ jobs:
     docker:
       - image: circleci/node:13.8.0
     steps:
-      # Checkout code from git
+      - checkout
       - run:
           name: Run migrations
           command: |
-            # Your code here
-            # exit 0
+            npm run migrations
+
       - run:
           name: Send migration results to memstash
           command: |
+            if grep -q "has been executed successfully"
+            then
+              echo "yes!!"
+            fi
             # Your code here
             # exit 0
      # Here's where you will add some code to rollback on failure      
@@ -360,8 +364,8 @@ workflows:
 #             only: [test-feature-branch]
       - configure-infrastructure:
          requires: [test]    #require ,deploy-infrastructure
-#      - run-migrations:
-#          requires: [configure-infrastructure]
+       - run-migrations:
+           requires: [configure-infrastructure]
 #      - deploy-frontend:
 #          requires: [run-migrations]
 #      - deploy-backend:
