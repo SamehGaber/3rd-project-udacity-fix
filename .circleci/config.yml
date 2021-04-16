@@ -54,7 +54,7 @@ jobs:
             echo "what !"
             aws --version
             aws s3 ls 
-            aws ec2 describe-instances --query 'Reservations[*].Instances[*].PrivateIpAddress' --filters "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:7}" --output text >> ~/project/.circleci/ansible/inventory.txt
+            aws ec2 describe-instances --query 'Reservations[*].Instances[*].PrivateIpAddress' --filters "Name=tag:Name,Values=backend-ae1d965" --output text >> ~/project/.circleci/ansible/inventory.txt
                        
       - persist_to_workspace:
           root: ~/
@@ -201,13 +201,11 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            # Your code here
-            exit 0
+            apk add --update ansible 
       - run:
           name: Configure server
           command: |
-            # Your code here
-            exit 0
+            ansible-playbook configure-server.yml -i inventory.txt
       # Here's where you will add some code to rollback on failure      
 
   run-migrations:
@@ -325,14 +323,14 @@ jobs:
 workflows:
   default:
     jobs:
-      - pre-test:
-          filters:
-            branches:
-              only: [test-feature-branch]
-#     - test:
+#     - pre-test:
 #         filters:
 #           branches:
 #             only: [test-feature-branch]
+      - test:
+          filters:
+            branches:
+              only: [test-feature-branch]
 
 #     - build-frontend:
 #        context:
@@ -346,14 +344,14 @@ workflows:
 #          requires: [build-backend]
 #     - scan-frontend:
 #         requires: [build-frontend]
-      - deploy-infrastructure:
+#     - deploy-infrastructure:
 #         requires: [test-frontend, test-backend, scan-frontend, scan-backend]
-          requires: [pre-test]
+#         requires: [pre-test]
 #         filters:
 #           branches:
 #             only: [test-feature-branch]
       - configure-infrastructure:
-         requires: [deploy-infrastructure]    #require ,deploy-infrastructure
+         requires: [test]    #require ,deploy-infrastructure
 #      - run-migrations:
 #          requires: [configure-infrastructure]
 #      - deploy-frontend:
