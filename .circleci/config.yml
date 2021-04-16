@@ -194,7 +194,7 @@ jobs:
       - checkout
       - add_ssh_keys:
            fingerprints:
-             - "e9:b7:ef:6b:70:b2:56:dc:c8:41:d7:12:6c:b7:a9:7e"    # Add ssh keys with fingerprint
+             - "e9:b7:ef:6b:70:b2:56:dc:c8:41:d7:12:6c:b7:a9:7e"    # Add ssh keys with fingerprint #this is "uda-people key"
       - attach_workspace:       # attach workspace
          at: ~/
       - run: cat ~/project/.circleci/ansible/inventory.txt   
