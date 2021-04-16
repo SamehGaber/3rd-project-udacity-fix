@@ -1,6 +1,15 @@
 ---
 
 - name: "configuration play." 
+  environment:
+    TYPEORM_CONNECTION: "{{ lookup('env','TYPEORM_CONNECTION') }}"
+    TYPEORM_HOST: "{{ lookup('env','TYPEORM_CONNECTION') }}"
+    TYPEORM_USERNAME: "{{ lookup('env','TYPEORM_CONNECTION') }}"
+    TYPEORM_PASSWORD: "{{ lookup('env','TYPEORM_CONNECTION') }}"
+    TYPEORM_DATABASE: "{{ lookup('env','TYPEORM_CONNECTION') }}"
+    TYPEORM_MIGRATIONS: "{{ lookup('env','TYPEORM_CONNECTION') }}"
+    TYPEORM_ENTITIES: "{{ lookup('env','TYPEORM_CONNECTION') }}"
+    TYPEORM_PORT: 5432
   hosts: web
   user: ubuntu
   gather_facts: false

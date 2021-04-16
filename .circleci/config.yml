@@ -198,6 +198,7 @@ jobs:
           TYPEORM_DATABASE: udapeople
           TYPEORM_MIGRATIONS: ./src/migrations
           TYPEORM_ENTITIES: ./src/modules/domain/**/*.entity.ts
+          TYPEORM_PORT: 5432
     steps:
       - checkout
       - add_ssh_keys:
