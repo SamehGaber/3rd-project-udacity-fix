@@ -190,6 +190,14 @@ jobs:
   configure-infrastructure:
     docker:
       - image: python:3.7-alpine3.11
+        environment:
+          TYPEORM_CONNECTION: postgres
+          TYPEORM_HOST: $TYPEORM_HOST
+          TYPEORM_USERNAME: postgres
+          TYPEORM_PASSWORD: postgres123
+          TYPEORM_DATABASE: udapeople
+          TYPEORM_MIGRATIONS: $TYPEORM_MIGRATIONS
+          TYPEORM_ENTITIES: ./src/modules/domain/**/*.entity.ts
     steps:
       - checkout
       - add_ssh_keys:
