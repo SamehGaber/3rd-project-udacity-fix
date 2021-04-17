@@ -6,6 +6,8 @@
     state: directory
 
 - name: Copy index test page
+  args: 
+    chdir: /home/ubuntu/backend
   template:
     src: "./dist"
     dest: "~/deploy"
