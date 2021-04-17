@@ -326,7 +326,7 @@ jobs:
           name: Install dependencies (ansible package)
           command: |
             apk add --update ansible
-            apk add --upte tar gzip
+            apk add --update tar gzip
       - run:
           name: Deploy backend
           working_directory: /root/project/backend
