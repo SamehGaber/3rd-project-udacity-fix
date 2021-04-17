@@ -421,8 +421,8 @@ workflows:
 #        requires: [test]    #require ,deploy-infrastructure ,test
 #     - run-migrations:
 #        requires: [pre-test]  #,require configure-infrastructure ,pre-test
-      - deploy-frontend:
-         requires: [test]  #run-migrations]
+#     - deploy-frontend:
+#        requires: [test]  #run-migrations]
       - deploy-backend:
           requires: [test] #run-migrations
 #      - smoke-test:
