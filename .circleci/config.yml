@@ -360,7 +360,7 @@ jobs:
           command: |
             # your code here
             # http://18.236.164.143:3030
-            URL=$(curl -H "Content-Type: text/plain" -H "token: 0279bc18-c002-44d8-a814-575be01ed402" \
+            Export URL=$(curl -H "Content-Type: text/plain" -H "token: 0279bc18-c002-44d8-a814-575be01ed402" \
             --request GET \
             http://api.memstash.io/values/Backend_URL)
             echo $URL
