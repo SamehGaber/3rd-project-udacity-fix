@@ -226,7 +226,6 @@ jobs:
           name: Run migrations
           command: |
             pwd
-            cd backend
             echo ENVIRONMENT=production > "backend/.env"
             echo TYPEORM_CONNECTION=postgres >> "backend/.env"
             echo TYPEORM_ENTITIES=./src/modules/domain/**/*.entity.ts >> "backend/.env"
