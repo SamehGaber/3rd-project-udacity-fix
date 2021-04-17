@@ -2,17 +2,17 @@
 ---
 - name: Creates directory
   file:
-    path: ~/backend
+    path: ~/deploy
     state: directory
 
 - name: Copy index test page
   unarchive:
     src: "/root/project/test.tar.gz"   #../../../../backend /.dist , /dist , 
-    dest: "~/backend"
+    dest: "~/deploy"
 
 - name: Executing node
   shell: |
-    cd home/ubuntu/backend
+    cd home/ubuntu/deploy/backend
     pm2 start npm --name backend -- start
 
 
