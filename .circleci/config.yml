@@ -55,10 +55,10 @@ jobs:
             aws --version
             aws s3 ls 
             aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --filters "Name=tag:Name,Values=backend-20ef7de" --output text >> ~/project/.circleci/ansible/inventory.txt
-            BACKEND_IP=$(aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --filters "Name=tag:Name,Values=backend-20ef7de" --output text )
+            BACKEND_IP= $(aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --filters "Name=tag:Name,Values=backend-20ef7de" --output text )
             curl -H "Content-Type: text/plain" -H "token: 0279bc18-c002-44d8-a814-575be01ed402" \
             --request PUT \
-            --data 'https://${BACKEND_IP}:3030' \
+            --data 'https://$BACKEND_IP:3030' \
             https://api.memstash.io/values/Backend_URL
                        
       - persist_to_workspace:
@@ -317,17 +317,24 @@ jobs:
     docker:
       - image: python:3.7-alpine3.11 # Docker image here that supports Ansible
     steps:
-      # Checkout code from git
-      # Add ssh keys with fingerprint
-      # attach workspace
+      - checkout
+      - add_ssh_keys:
+           fingerprints:
+             - "e9:b7:ef:6b:70:b2:56:dc:c8:41:d7:12:6c:b7:a9:7e"    # Add ssh keys with fingerprint #this is "uda-people key"
+      - attach_workspace:       # attach workspace.
+         at: ~/
+      - run: cat ~/project/.circleci/ansible/inventory.txt   
       - run:
-          name: Install dependencies
+          name: Install dependencies (aws)
           command: |
-            # your code here
+            sudo apt-get update && sudo apt-get install -yy less
+            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+            unzip awscliv2.zip
+            sudo ./aws/install
       - run:
           name: Deploy backend
           command: |
-            # your code here
+            ansible-playbook ~/project/.circleci/ansible/deploy-backend.yml -i ~/project/.circleci/ansible/inventory.txt 
       # Here's where you will add some code to rollback on failure  
 
   smoke-test:
@@ -422,8 +429,8 @@ workflows:
 #        requires: [pre-test]  #,require configure-infrastructure ,pre-test
       - deploy-frontend:
          requires: [pre-test]  #run-migrations]
-#      - deploy-backend:
-#          requires: [run-migrations]
+      - deploy-backend:
+          requires: [pre-test] #run-migrations
 #      - smoke-test:
 #          requires: [deploy-backend, deploy-frontend]
 #      - cloudfront-update:

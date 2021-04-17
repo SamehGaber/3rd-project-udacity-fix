@@ -1,0 +1,12 @@
+
+---
+- name: Creates directory
+  file:
+    path: ~/deploy
+    state: directory
+
+- name: Copy index test page
+  template:
+    src: "~/project/backend/./dist"
+    dest: "~/deploy"
+
