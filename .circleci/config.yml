@@ -328,8 +328,9 @@ jobs:
             apk add --update ansible 
       - run:
           name: Deploy backend
-          #working_directory: ./backend
+          working_directory: ./backend
           command: |
+            tar czf backend.tar.gz backend
             ansible-playbook ~/project/.circleci/ansible/deploy-backend.yml -i ~/project/.circleci/ansible/inventory.txt 
       # Here's where you will add some code to rollback on failure  
 
