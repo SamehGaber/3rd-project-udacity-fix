@@ -236,9 +236,12 @@ jobs:
       - run:
           name: Send migration results to memstash
           command: |
-            if grep -q "has been executed successfully"
+            cd backend
+            if grep -q "No migrations are pending" migration.log
             then
               echo "yes!!"
+            else
+              echo "no!!"
             fi
             # Your code here
             # exit 0
