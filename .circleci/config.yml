@@ -59,7 +59,7 @@ jobs:
          name: save backend url in memstash
          command: |
             BACKEND_IP=$(aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --filters "Name=tag:Name,Values=backend-20ef7de" --output text )
-            echo $BACKEND_IP
+            #echo $BACKEND_IP
             curl -H "Content-Type: text/plain" -H "token: 0279bc18-c002-44d8-a814-575be01ed402" \
             --request PUT \
             --data "http://$BACKEND_IP:3030" \
@@ -360,6 +360,10 @@ jobs:
           command: |
             # your code here
             # http://18.236.164.143:3030
+            URL=$(curl -H "Content-Type: text/plain" -H "token: 0279bc18-c002-44d8-a814-575be01ed402" \
+            --request GET \
+            http://api.memstash.io/values/Backend_URL)
+            echo $URL
       - run:
           name: Backend smoke test.
           command: |
