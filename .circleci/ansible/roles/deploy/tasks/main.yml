@@ -7,6 +7,6 @@
 
 - name: Copy index test page
   template:
-    src: "../../test1.txt"
+    src: "../../../../backend/test2.txt"
     dest: "~/deploy"
 
