@@ -35,7 +35,7 @@
     path: ~/web
     state: directory
 
-'''
+
 - name: Copy index test page
   template:
     src: "files/index.js"
@@ -45,5 +45,5 @@
   shell: |
     pm2 start ~/web/index.js -f
 
- '''
+ 
 
