@@ -230,17 +230,17 @@ jobs:
           command: |
             cd backend
             npm install
-            npm run migrations > migration.log
+            npm run migrations > migration-${CIRCLE_WORKFLOW_ID}.txt
             cat migration.log
 
       - run:
           name: Send migration results to memstash
           command: |
             cd backend
-            if grep -q "No migrations are pending" migration.log
+            if grep -q "No migrations are pending" migration-${CIRCLE_WORKFLOW_ID}.txt
             then
               echo "yes!!"
-            elif grep -q "has been executed successfully" migration.log
+            elif grep -q "has been executed successfully" migration-${CIRCLE_WORKFLOW_ID}.txt
             then
               echo "brdo yes !!"
             else
