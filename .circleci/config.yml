@@ -62,7 +62,7 @@ jobs:
             echo $BACKEND_IP
             curl -H "Content-Type: text/plain" -H "token: 0279bc18-c002-44d8-a814-575be01ed402" \
             --request PUT \
-            --data 'http://BACKEND_IP:3030' \
+            --data "http://$BACKEND_IP:3030" \
             http://api.memstash.io/values/Backend_URL 
                        
       - persist_to_workspace:
