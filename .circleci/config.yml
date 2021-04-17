@@ -314,6 +314,8 @@ jobs:
       - image: python:3.7-alpine3.11 # Docker image here that supports Ansible
     steps:
       - checkout
+      - restore_cache:
+          key: backend-build
       - add_ssh_keys:
            fingerprints:
              - "e9:b7:ef:6b:70:b2:56:dc:c8:41:d7:12:6c:b7:a9:7e"    # Add ssh keys with fingerprint #this is "uda-people key"
@@ -326,7 +328,7 @@ jobs:
             apk add --update ansible 
       - run:
           name: Deploy backend
-          working_directory: ./backend
+          #working_directory: ./backend
           command: |
             ansible-playbook ~/project/.circleci/ansible/deploy-backend.yml -i ~/project/.circleci/ansible/inventory.txt 
       # Here's where you will add some code to rollback on failure  
@@ -405,8 +407,8 @@ workflows:
       - build-backend
 #     - test-frontend:
 #         requires: [build-frontend]
-      - test-backend:
-          requires: [build-backend]
+#     - test-backend:
+#         requires: [build-backend]
 #     - scan-backend:
 #          requires: [build-backend]
 #     - scan-frontend:
@@ -424,7 +426,7 @@ workflows:
 #     - deploy-frontend:
 #        requires: [test]  #run-migrations]
       - deploy-backend:
-          requires: [test-backend ,test] #run-migrations ,test
+          requires: [test] #run-migrations ,test
 #      - smoke-test:
 #          requires: [deploy-backend, deploy-frontend]
 #      - cloudfront-update:
