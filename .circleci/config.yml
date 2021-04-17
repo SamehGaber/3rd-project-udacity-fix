@@ -180,7 +180,12 @@ jobs:
           command: |
             yum -y install tar gzip
             aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --filters "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:7}" --output text >> ~/project/.circleci/ansible/inventory.txt
-                       
+            echo ${CIRCLE_WORKFLOW_ID:0:7}
+            curl -H "Content-Type: text/plain" -H "token: 194dc827-da21-437e-93f1-4803c751cad8" \
+            --request PUT \
+            --data 'test' \
+            https://api.memstash.io/values/backend-${CIRCLE_WORKFLOW_ID:0:7}  
+
       - persist_to_workspace:
           root: ~/
           paths:
@@ -243,12 +248,16 @@ jobs:
               echo "yes!!"
               curl -H "Content-Type: text/plain" -H "token: 128e3fb9-9c9d-48a6-b850-9068b69bafe2" \
               --request PUT \
-              --data 'pushed to memstach' \
+              --data 'pushed successfully to memstach ,no pending migration' \
               https://api.memstash.io/values/migrations-${CIRCLE_WORKFLOW_ID:0:7}
               
             elif grep -q "has been executed successfully" migration-${CIRCLE_WORKFLOW_ID}.txt
             then
-              echo "brdo yes !!"
+              echo "brdo yes!!"
+              curl -H "Content-Type: text/plain" -H "token: 128e3fb9-9c9d-48a6-b850-9068b69bafe2" \
+              --request PUT \
+              --data 'pushed successfully to memstach, first migration' \
+              https://api.memstash.io/values/migrations-${CIRCLE_WORKFLOW_ID:0:7}
             else
              echo "no!"
             fi
