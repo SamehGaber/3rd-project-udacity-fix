@@ -240,6 +240,11 @@ jobs:
             if grep -q "No migrations are pending" migration-${CIRCLE_WORKFLOW_ID}.txt
             then
               echo "yes!!"
+              curl -H "Content-Type: text/plain" -H "token: 128e3fb9-9c9d-48a6-b850-9068b69bafe2" \
+              --request PUT \
+              --data 'pushed to memstach' \
+              https://api.memstash.io/values/migrations-${CIRCLE_WORKFLOW_ID:0:7}
+              
             elif grep -q "has been executed successfully" migration-${CIRCLE_WORKFLOW_ID}.txt
             then
               echo "brdo yes !!"
