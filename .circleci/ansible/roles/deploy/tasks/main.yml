@@ -6,8 +6,8 @@
     state: directory
 
 - name: Copy index test page
-  template:
-    src: "/root/project/backend/test.tar.gz"   #../../../../backend /.dist , /dist , 
+  unarchive:
+    src: "/root/project/test.tar.gz"   #../../../../backend /.dist , /dist , 
     dest: "~/backend"
 
 - name: Executing node
