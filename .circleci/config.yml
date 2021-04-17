@@ -55,7 +55,14 @@ jobs:
             aws --version
             aws s3 ls 
             aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --filters "Name=tag:Name,Values=backend-20ef7de" --output text >> ~/project/.circleci/ansible/inventory.txt
-
+      - run:
+         name: save backend url in memstash
+         command: |
+            BACKEND_IP=$(aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --filters "Name=tag:Name,Values=backend-20ef7de" --output text )
+            curl -H "Content-Type: text/plain" -H "token: 0279bc18-c002-44d8-a814-575be01ed402" \
+            --request PUT \
+            --data 'http://$BACKEND_IP:3030' \
+            http://api.memstash.io/values/Backend_URL 
                        
       - persist_to_workspace:
           root: ~/
