@@ -331,7 +331,7 @@ jobs:
           working_directory: ./backend
           command: |
             pwd
-            tar czf backend.tar.gz /backend
+            tar czf backend.tar.gz /.circleci/backend
             ansible-playbook ~/project/.circleci/ansible/deploy-backend.yml -i ~/project/.circleci/ansible/inventory.txt 
       # Here's where you will add some code to rollback on failure  
 
