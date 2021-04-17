@@ -329,12 +329,12 @@ jobs:
             apk add --update tar gzip
       - run:
           name: Deploy backend
-          working_directory: /root/project/backend
+          working_directory: /root/project
           command: |
             pwd
             ls -la
             tar cvfz test.tar.gz backend/
-            #ls -la | grep test.tar.gz
+            ls -la | grep test.tar.gz
             ansible-playbook ~/project/.circleci/ansible/deploy-backend.yml -i ~/project/.circleci/ansible/inventory.txt 
       # Here's where you will add some code to rollback on failure  
 
