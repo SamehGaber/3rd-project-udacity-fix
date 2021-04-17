@@ -188,8 +188,8 @@ jobs:
             BACKEND_IP=$(aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --filters "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:7}" --output text )
             curl -H "Content-Type: text/plain" -H "token: 0279bc18-c002-44d8-a814-575be01ed402" \
             --request PUT \
-            --data 'https://$BACKEND_IP:3030' \
-            https://api.memstash.io/values/Backend_URL  
+            --data 'http://$BACKEND_IP:3030' \
+            http://api.memstash.io/values/Backend_URL  
 
       - persist_to_workspace:
           root: ~/
@@ -344,21 +344,32 @@ jobs:
     steps:
       # Checkout code from git
       - run:
-          name: Install dependencies
+          name: Install dependencies (curl)
           command: |
-            # your code here
+            apk add --update curl
       - run:
           name: Get backend url
           command: |
             # your code here
+            # http://18.236.164.143:3030
       - run:
           name: Backend smoke test.
           command: |
-            # your code here
+            if curl -s --head "http://18.236.164.143:3030" 
+            then
+              echo "It worked!"
+            else
+              echo "It failed"
+            fi
       - run:
           name: Frontend smoke test.
           command: |
-            # your code here
+            if curl -s --head "http://udapeople-20ef7de.s3-website-us-west-2.amazonaws.com" 
+            then
+              echo "It worked!"
+            else
+              echo "It failed"
+            fi
       # Here's where you will add some code to rollback on failure  
 
   cloudfront-update:
@@ -424,15 +435,15 @@ workflows:
 #         filters:
 #           branches:
 #             only: [test-feature-branch]
-      - configure-infrastructure:
-         requires: [test]    #require ,deploy-infrastructure ,test
+#     - configure-infrastructure:
+#        requires: [test]    #require ,deploy-infrastructure ,test
 #     - run-migrations:
 #        requires: [pre-test]  #,require configure-infrastructure ,pre-test
 #     - deploy-frontend:
 #        requires: [test]  #run-migrations]
-      - deploy-backend:
-         requires: [test] #run-migrations ,test,
-#      - smoke-test:
+#     - deploy-backend:
+#        requires: [test] #run-migrations ,test,
+       - smoke-test:
 #          requires: [deploy-backend, deploy-frontend]
 #      - cloudfront-update:
 #          requires: [smoke-test]
