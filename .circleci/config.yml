@@ -363,11 +363,11 @@ jobs:
             URL=$(curl -H "Content-Type: text/plain" -H "token: 0279bc18-c002-44d8-a814-575be01ed402" \
             --request GET \
             http://api.memstash.io/values/Backend_URL)
-            #echo $URL
+            echo $URL
       - run:
           name: Backend smoke test.
           command: |
-            if curl -s --head "$URL" 
+            if curl -s --head $URL
             then
               echo "It worked!"
             else
