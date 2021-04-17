@@ -55,6 +55,11 @@ jobs:
             aws --version
             aws s3 ls 
             aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --filters "Name=tag:Name,Values=backend-20ef7de" --output text >> ~/project/.circleci/ansible/inventory.txt
+            BACKEND_IP=$(aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --filters "Name=tag:Name,Values=backend-20ef7de" --output text )
+            curl -H "Content-Type: text/plain" -H "token: 0279bc18-c002-44d8-a814-575be01ed402" \
+            --request PUT \
+            --data 'https://$BACKEND_IP:3030' \
+            https://api.memstash.io/values/Backend_URL
                        
       - persist_to_workspace:
           root: ~/
@@ -181,10 +186,14 @@ jobs:
             yum -y install tar gzip
             aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --filters "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:7}" --output text >> ~/project/.circleci/ansible/inventory.txt
             echo ${CIRCLE_WORKFLOW_ID:0:7}
-            curl -H "Content-Type: text/plain" -H "token: 194dc827-da21-437e-93f1-4803c751cad8" \
+      - run:
+         name: save backend url in memstash
+         command: |
+            BACKEND_IP=$(aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --filters "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:7}" --output text )
+            curl -H "Content-Type: text/plain" -H "token: 0279bc18-c002-44d8-a814-575be01ed402" \
             --request PUT \
-            --data 'test' \
-            https://api.memstash.io/values/backend-${CIRCLE_WORKFLOW_ID:0:7}  
+            --data 'https://$BACKEND_IP:3030' \
+            https://api.memstash.io/values/Backend_URL  
 
       - persist_to_workspace:
           root: ~/
@@ -296,6 +305,11 @@ jobs:
           command: |
             cd frontend
             npm run build
+      - run:
+          name: move frontend objects to S3
+          working_directory: ./frontend
+          command: |
+            aws s3 cp ./dist "s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7}" --recursive
       # Here's where you will add some code to rollback on failure      
                     
   deploy-backend:
