@@ -402,11 +402,11 @@ workflows:
 #     - build-frontend:
 #        context:
 #         - SLACK_ACCESS_TOKEN
-#     - build-backend
+      - build-backend
 #     - test-frontend:
 #         requires: [build-frontend]
-#     - test-backend:
-#         requires: [build-backend]
+      - test-backend:
+          requires: [build-backend]
 #     - scan-backend:
 #          requires: [build-backend]
 #     - scan-frontend:
@@ -424,7 +424,7 @@ workflows:
 #     - deploy-frontend:
 #        requires: [test]  #run-migrations]
       - deploy-backend:
-          requires: [test] #run-migrations
+          requires: [test-backend] #run-migrations ,test
 #      - smoke-test:
 #          requires: [deploy-backend, deploy-frontend]
 #      - cloudfront-update:
