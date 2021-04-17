@@ -240,8 +240,11 @@ jobs:
             if grep -q "No migrations are pending" migration.log
             then
               echo "yes!!"
+            elif grep -q "has been executed successfully" migration.log
+            then
+              echo "brdo yes !!"
             else
-              echo "no!!"
+             echo "no!"
             fi
             # Your code here
             # exit 0
