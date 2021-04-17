@@ -289,7 +289,6 @@ jobs:
       - run:
           name: Deploy frontend objects
           command: |
-            cd /home/circleci/project/frontend
             npm run build
       # Here's where you will add some code to rollback on failure      
                     
