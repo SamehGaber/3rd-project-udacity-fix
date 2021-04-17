@@ -274,11 +274,13 @@ jobs:
     docker:
       - image: amazon/aws-cli #docker image that support aws cli
     steps:
-      # Checkout code from git
+      - checkout
+      - restore_cache:
+          key: frontend-build-updated
       - run:
           name: Install dependencies
           command: |
-            # your code here
+            npm install
       - run:
           name: Get backend url
           command: |
@@ -289,6 +291,7 @@ jobs:
       - run:
           name: Deploy frontend objects
           command: |
+            cd frontend
             npm run build
       # Here's where you will add some code to rollback on failure      
                     
