@@ -39,7 +39,7 @@ commands:
             # Curl command here to see if there was a successful migration associated with the workflow id, store result in SUCCESS variable
             export SUCCESS=$(curl -H "Content-Type: text/plain" -H "token: 128e3fb9-9c9d-48a6-b850-9068b69bafe2" \
             --request GET \
-            http://api.memstash.io/values/migrations-8899478)
+            http://api.memstash.io/values/migrations-ced3332)
             echo $SUCCESS
             #SUCCESS = 1
             if(( $SUCCESS==1 )); 
@@ -422,7 +422,7 @@ jobs:
           name: Frontend smoke test.
           command: |
             #"http://udapeople-${CIRCLE_WORKFLOW_ID}.s3-website-us-east-1.amazonaws.com" | grep "Welcome"
-            if curl -s "http://udapeople-20ef7de.s3-website-us-west-2.amazonaws.com" | grep "Welcome"
+            if curl -s "http://udapeople-20ef7de.s3-website-us-west-2.amazonaws.com" | grep "Wlcome"
             then
               echo "It worked!"
               #return 0
@@ -502,8 +502,8 @@ workflows:
 #             only: [test-feature-branch]
 #     - configure-infrastructure:
 #        requires: [test]    #require ,deploy-infrastructure ,test
-      - run-migrations:
-         requires: [pre-test]  #,require configure-infrastructure ,pre-test
+#     - run-migrations:
+#        requires: [pre-test]  #,require configure-infrastructure ,pre-test
 #     - deploy-frontend:
 #        requires: [test]  #run-migrations]
 #     - deploy-backend:
