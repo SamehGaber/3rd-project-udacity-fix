@@ -356,7 +356,7 @@ jobs:
           command: |
             apk add --update curl
       - run:
-          name: Get backend url
+          name: Get backend url $ backend smoke test
           command: |
             # your code here
             # http://18.236.164.143:3030
@@ -370,16 +370,7 @@ jobs:
             else
               echo "It failed"
             fi
-      - run:
-          name: Backend smoke test.
-          command: |
-            echo $URL
-            if curl -s --head "$URL"
-            then
-              echo "It worked!"
-            else
-              echo "It failed"
-            fi
+
       - run:
           name: Frontend smoke test.
           command: |
