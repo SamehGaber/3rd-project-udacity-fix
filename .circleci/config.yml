@@ -486,10 +486,10 @@ jobs:
 workflows:
   default:
     jobs:
-#     - pre-test:
-#         filters:
-#           branches:
-#             only: [test-feature-branch]
+      - pre-test:
+          filters:
+            branches:
+              only: [test-feature-branch]
 #     - test:
 #         filters:
 #           branches:
