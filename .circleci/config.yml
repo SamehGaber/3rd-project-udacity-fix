@@ -45,8 +45,8 @@ jobs:
           name: pre-test
           command: |
             echo "pre-test"
-            - destroy-environment:
-               WorkflowID: "work flow id goes here"
+      - destroy-environment:
+          WorkflowID: "my workflow id goes here"
   test:
     docker:
       - image: amazon/aws-cli
