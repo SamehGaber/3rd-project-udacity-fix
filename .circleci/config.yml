@@ -230,6 +230,8 @@ jobs:
       # Here's where you will add some code to rollback on failure      
       - destroy-environment:
           WorkflowID: "${CIRCLE_WORKFLOW_ID}"
+      - revert-migrations:
+          WorkflowID: "${CIRCLE_WORKFLOW_ID}"
 
   configure-infrastructure:
     docker:
@@ -253,6 +255,8 @@ jobs:
             ansible-playbook ~/project/.circleci/ansible/configure-server.yml -i ~/project/.circleci/ansible/inventory.txt 
       # Here's where you will add some code to rollback on failure      
       - destroy-environment:
+          WorkflowID: "${CIRCLE_WORKFLOW_ID}"
+      - revert-migrations:
           WorkflowID: "${CIRCLE_WORKFLOW_ID}"
   run-migrations:
     docker:
@@ -311,6 +315,9 @@ jobs:
      # Here's where you will add some code to rollback on failure      
       - destroy-environment:
           WorkflowID: "${CIRCLE_WORKFLOW_ID}"
+      - revert-migrations:
+          WorkflowID: "${CIRCLE_WORKFLOW_ID}"
+
   deploy-frontend:
     docker:
       - image: circleci/node:13.8.0 #docker image that support aws cli
@@ -345,7 +352,10 @@ jobs:
             aws s3 cp ./dist "s3://udapeople-20ef7de" --recursive
       # Here's where you will add some code to rollback on failure      
       - destroy-environment:
-          WorkflowID: "${CIRCLE_WORKFLOW_ID}"                   
+          WorkflowID: "${CIRCLE_WORKFLOW_ID}"    
+      - revert-migrations:
+          WorkflowID: "${CIRCLE_WORKFLOW_ID}"
+
   deploy-backend:
     docker:
       - image: python:3.7-alpine3.11 # Docker image here that supports Ansible
@@ -375,6 +385,8 @@ jobs:
             ansible-playbook ~/project/.circleci/ansible/deploy-backend.yml -i ~/project/.circleci/ansible/inventory.txt 
       # Here's where you will add some code to rollback on failure  
       - destroy-environment:
+          WorkflowID: "${CIRCLE_WORKFLOW_ID}"
+      - revert-migrations:
           WorkflowID: "${CIRCLE_WORKFLOW_ID}"
   smoke-test:
     docker:
@@ -416,6 +428,9 @@ jobs:
       # Here's where you will add some code to rollback on failure  
       - destroy-environment:
           WorkflowID: "${CIRCLE_WORKFLOW_ID}"
+      - revert-migrations:
+          WorkflowID: "${CIRCLE_WORKFLOW_ID}"
+          
   cloudfront-update:
     docker:
       - image: amazon/aws-cli #docker image that support aws cli 
