@@ -379,8 +379,8 @@ jobs:
             then
               echo "It worked!"
             else
-              #echo "It failed"
-              return 1
+              echo "It failed"
+              #return 1
             fi
       # Here's where you will add some code to rollback on failure  
 
