@@ -4,14 +4,17 @@ commands:
   destroy-environment:
     description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
     parameters:
+      WorkflowID:
+        description:
+        type: string
       # Add parameter here   
     steps:
       - run:
           name: Destroy environments
-          when: on_fail
+          #when: on_fail
           command: |
-            echo "my code here"
-            exit 1
+            echo "my code <<parameters.WorkflowID>>"
+            #exit 1
 
   revert-migrations:
     description: Revert the last migration if successfully run in the current workflow.
@@ -42,6 +45,8 @@ jobs:
           name: pre-test
           command: |
             echo "pre-test"
+            - destroy-environment:
+               WorkflowID: "work flow id goes here"
   test:
     docker:
       - image: amazon/aws-cli
