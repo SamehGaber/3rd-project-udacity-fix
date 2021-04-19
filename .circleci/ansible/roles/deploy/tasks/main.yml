@@ -5,15 +5,21 @@
     path: ~/deploy
     state: directory
 
-- name: Copy index test page
+- name: uncompress the copied backend folder
   unarchive:
     src: "/root/project/test.tar.gz"   #../../../../backend /.dist , /dist , 
     dest: "~/deploy"
 
+- name: Build
+  become: true
+  shell: |
+    cd /home/ubuntu/deploy/backend
+    npm install
+    npm run buil
 - name: Executing node
   shell: |
     cd home/ubuntu/deploy/backend
-    #pm2 start npm --name backend -- start
-    pm2 start npm --run "start:dev"
+    pm2 start npm --name backend -- start
+    
 
 
