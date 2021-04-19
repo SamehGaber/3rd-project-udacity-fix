@@ -518,7 +518,7 @@ workflows:
       - configure-infrastructure:
          requires: [deploy-infrastructure]    #require ,deploy-infrastructure ,test
       - run-migrations:
-         requires: [pre-test]  #,require configure-infrastructure ,pre-test
+         requires: [configure-infrastructure]  #,require configure-infrastructure ,pre-test
       - deploy-frontend:
          requires: [run-migrations]  #run-migrations ,test
       - deploy-backend:
