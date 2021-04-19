@@ -33,7 +33,7 @@ commands:
       - run:
           name: Revert migrations
           # Add when this will run
-          when: on_fail
+          #when: on_fail
           command: |
             echo "my code <<parameters.WorkflowID>>"
             # Curl command here to see if there was a successful migration associated with the workflow id, store result in SUCCESS variable
