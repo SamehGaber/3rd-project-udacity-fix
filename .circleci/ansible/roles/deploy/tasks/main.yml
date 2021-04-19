@@ -16,6 +16,8 @@
     cd /home/ubuntu/deploy/backend
     npm install
     npm run build
+    cd dist
+    ls
 - name: Executing node
   shell: |
     cd home/ubuntu/deploy/backend
