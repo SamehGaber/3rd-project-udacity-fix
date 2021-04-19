@@ -11,7 +11,7 @@ commands:
     steps:
       - run:
           name: Destroy environments
-          #when: on_fail
+          when: on_fail
           command: |
             echo "my code <<parameters.WorkflowID>>"
             aws s3 rm s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --recursive
