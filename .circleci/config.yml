@@ -11,7 +11,7 @@ commands:
     steps:
       - run:
           name: Destroy environments
-          when: on_fail
+          #when: on_fail
           command: |
             echo "my code <<parameters.WorkflowID>>"
             aws s3 rm s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --recursive
@@ -33,7 +33,7 @@ commands:
       - run:
           name: Revert migrations
           # Add when this will run
-          #when: on_fail
+          when: on_fail
           command: |
             echo "my code <<parameters.WorkflowID>>"
             # Curl command here to see if there was a successful migration associated with the workflow id, store result in SUCCESS variable
@@ -509,22 +509,22 @@ workflows:
 #          requires: [build-backend]
 #     - scan-frontend:
 #         requires: [build-frontend]
-#     - deploy-infrastructure:
+      - deploy-infrastructure:
 #         requires: [test-frontend, test-backend, scan-frontend, scan-backend]
-#         requires: [pre-test]
-#         filters:
-#           branches:
-#             only: [test-feature-branch]
-#     - configure-infrastructure:
-#        requires: [deploy-infrastructure]    #require ,deploy-infrastructure ,test
+          requires: [pre-test]
+          filters:
+            branches:
+              only: [test-feature-branch]
+      - configure-infrastructure:
+         requires: [deploy-infrastructure]    #require ,deploy-infrastructure ,test
       - run-migrations:
          requires: [pre-test]  #,require configure-infrastructure ,pre-test
-#     - deploy-frontend:
-#        requires: [run-migrations]  #run-migrations ,test
-#     - deploy-backend:
-#        requires: [run-migrations] #run-migrations ,test,
-#     - smoke-test:
-#        requires: [deploy-backend, deploy-frontend]
+      - deploy-frontend:
+         requires: [run-migrations]  #run-migrations ,test
+      - deploy-backend:
+         requires: [run-migrations] #run-migrations ,test,
+      - smoke-test:
+         requires: [deploy-backend, deploy-frontend]
 #      - cloudfront-update:
 #          requires: [smoke-test]
 #      - cleanup:
