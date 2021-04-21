@@ -491,7 +491,7 @@ jobs:
       docker:
         - image: amazon/aws-cli #docker image that support aws cli
       steps:
-        - chekout
+        - checkout
         - run:
             name: Get old stack workflow id
             command: |
