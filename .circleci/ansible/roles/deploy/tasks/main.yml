@@ -34,7 +34,7 @@
 
 - name: Executing node
   shell: |
-    cd home/ubuntu/deploy/backend
+    cd /home/ubuntu/deploy/backend
     pm2 start npm --name backend --start
     
 
