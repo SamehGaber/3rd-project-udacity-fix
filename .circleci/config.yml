@@ -470,8 +470,8 @@ jobs:
           command: |
             aws cloudformation deploy \
               --template-file .circleci/files/cloudfront.yml \
-              --stack-name "uda-people-cloudfront-${CIRCLE_WORKFLOW_ID:0:7}" \
-              --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}" 
+              --stack-name "uda-people-cloudfront-1ebaf03" \ 
+              --parameter-overrides ID="1ebaf03" 
       - run:
          name: save CloudFront workFlow id  in memstash
          command: |
