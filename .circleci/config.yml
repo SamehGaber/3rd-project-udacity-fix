@@ -468,20 +468,19 @@ jobs:
       - run:
           name: Update cloudfront distribution
           command: |
-            aws cloudformation deploy \
-              --template-file .circleci/files/cloudfront.yml \
-              --stack-name "uda-people-cloudfront-1ebaf03" \ 
-              --parameter-overrides WorkflowID="1ebaf03" 
+            aws cloudformation deploy --template-file .circleci/files/cloudfront.yml --stack-name "uda-people-cloudfront-1ebaf03" --parameter-overrides WorkflowID="1ebaf03" 
+            # workflow id to be changed to ${CIRCLE_WORKFLOW_ID} to be the same one used to deploy frontend stack
       - run:
          name: save CloudFront workFlow id  in memstash
          command: |
-            export WorkflowID=$(aws cloudformation \
+            export OldWorkflowID=$(aws cloudformation \
               list-exports --query "Exports[?Name==\`WorkflowID\`].Value" \
               --no-paginate --output text)
             curl -H "Content-Type: text/plain" -H "token: 93f3c152-e580-4209-9636-8f4f4dde0d5d" \
             --request PUT \
-            --data "$workflowID" \
-            http://api.memstash.io/values/workflowID
+            --data "$OldWorkflowID" \
+            http://api.memstash.io/values/OldWorkflowID
+            echo $OldWorkflowID
 
       # Here's where you will add some code to rollback on failure  
       - destroy-environment:
