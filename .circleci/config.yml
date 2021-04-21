@@ -524,8 +524,8 @@ workflows:
 #            only: [test-feature-branch]
 #     - configure-infrastructure:
 #        requires: [deploy-infrastructure]    #require ,deploy-infrastructure ,test
-#     - run-migrations:
-#        requires: [pre-test]  #,require configure-infrastructure ,pre-test
+      - run-migrations:
+         requires: [test]  #,require configure-infrastructure ,pre-test
 #     - deploy-frontend:
 #        requires: [run-migrations]  #run-migrations ,test
       - deploy-backend:
