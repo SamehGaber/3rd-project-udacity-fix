@@ -493,6 +493,18 @@ jobs:
       steps:
         - checkout
         - run:
+            name: save CloudFront workFlow id  in memstash
+            command: |
+              export OldWorkflowID=$(aws cloudformation \
+                list-exports --query "Exports[?Name==\`WorkflowID\`].Value" \
+                --no-paginate --output text)
+              curl -H "Content-Type: text/plain" -H "token: 93f3c152-e580-4209-9636-8f4f4dde0d5d" \
+              --request PUT \
+              --data "$OldWorkflowID" \
+              http://api.memstash.io/values/OldWorkflowID
+              echo $OldWorkflowID
+
+        - run:
             name: Get old stack workflow id
             command: |
               # your code here
