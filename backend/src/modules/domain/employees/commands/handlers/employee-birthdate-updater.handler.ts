@@ -1,4 +1,4 @@
-const moment = require('moment');
+import * as moment from 'moment-timezone';
 import { BaseCommandHandler } from '../../../../common/commands';
 import { UpdateEmployeeBirthdate } from '../update-employee-birthdate.command';
 import { CommandHandler } from '@nestjs/cqrs';
