@@ -77,11 +77,11 @@ jobs:
             echo "what !"
             aws --version
             aws s3 ls 
-            aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --filters "Name=tag:Name,Values=backend-1ebaf03" --output text >> ~/project/.circleci/ansible/inventory.txt
+            aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --filters "Name=tag:Name,Values=backend-cd0d78f" --output text >> ~/project/.circleci/ansible/inventory.txt
       - run:
          name: save backend url in memstash
          command: |
-            BACKEND_IP=$(aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --filters "Name=tag:Name,Values=backend-1ebaf03" --output text )
+            BACKEND_IP=$(aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --filters "Name=tag:Name,Values=backend-cd0d78f" --output text )
             echo $BACKEND_IP
             curl -H "Content-Type: text/plain" -H "token: 0279bc18-c002-44d8-a814-575be01ed402" \
             --request PUT \
@@ -557,9 +557,9 @@ workflows:
 #           branches:
 #            only: [test-feature-branch]
       - configure-infrastructure:
-          requires: [pre-test]    #require ,deploy-infrastructure ,test
+          requires: [test]    #require ,deploy-infrastructure ,test
       - run-migrations:
-          requires: [pre-test]  #,require configure-infrastructure ,pre-test
+          requires: [configure-infrastructure]  #,require configure-infrastructure ,pre-test
 #     - deploy-frontend:
 #        requires: [run-migrations]  #run-migrations ,test
       - deploy-backend:
