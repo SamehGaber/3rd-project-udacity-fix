@@ -507,7 +507,7 @@ jobs:
               echo $OldWorkflowID
 
         - run:
-            name: Get old stack workflow id
+            name: Get old stack workflow id & remove old stacks
             command: |
               # your code here
               export OldWorkflowID=$(curl -H "Content-Type: text/plain" -H "token: 93f3c152-e580-4209-9636-8f4f4dde0d5d" --request GET https://api.memstash.io/values/OldWorkflowID)
@@ -515,21 +515,12 @@ jobs:
               echo $OldWorkflowID
               export STACKS=($(aws cloudformation list-stacks --query "StackSummaries[*].StackName" --stack-status-filter CREATE_COMPLETE --no-paginate --output text))
               echo $STACKS
-        - run:
-            name: Remove old stacks and files
-            command: |
-              if [[ "${STACKS[@]}" =~ "${OldWorkflowID}" ]]
-              then
-                # your code here
-                  echo ${OldWorkflowID}
-                  aws s3 rm "s3://udapeople-${OldWorkflowID}" --recursive
-                  aws s3 rb s3://udapeople-${OldWorkflowID} --force
-                  aws cloudformation delete-stack --stack-name uda-people-backend-${OldWorkflowID}
-                  aws cloudformation delete-stack --stack-name uda-people-frontend-${OldWorkflowID}
-                  echo "stack deleted succesfully"
-              else
-                 echo "new stack created"
-              fi
+              aws s3 rm "s3://udapeople-${OldWorkflowID}" --recursive
+              aws s3 rb s3://udapeople-${OldWorkflowID} --force
+              aws cloudformation delete-stack --stack-name uda-people-backend-${OldWorkflowID}
+              aws cloudformation delete-stack --stack-name uda-people-frontend-${OldWorkflowID}
+              echo "stack deleted succesfully"
+
           
 workflows:
   default:
